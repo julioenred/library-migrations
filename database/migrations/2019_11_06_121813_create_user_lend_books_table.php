@@ -14,7 +14,12 @@ class CreateUserLendBooksTable extends Migration
     public function up()
     {
         Schema::create('user_lend_books', function (Blueprint $table) {
-            $table->increments('id');
+            $table->primary(['user_id', 'book_id']);
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('book_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('book_id')->references('id')->on('books');
+            // $table->datetime('lended_at');
             $table->timestamps();
         });
     }
