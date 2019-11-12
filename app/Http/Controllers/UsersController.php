@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use Firebase\JWT\JWT;
+use App\Helpers\Token;
 
 class UsersController extends Controller
 {
@@ -54,7 +54,8 @@ class UsersController extends Controller
             "email" => $user->email,
         ];
 
-        $token = JWT::encode($data_token, $this->key);
+        $token = new Token($data_token);
+        $token = $token->encode();
 
         return response()->json([
             "token" => $token
