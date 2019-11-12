@@ -8,6 +8,17 @@ use Firebase\JWT\JWT;
 
 class UsersController extends Controller
 {
+    private $key = "`qo3ieh4gnopiewh89wnrti9ugnfiopearjsfp982857yuiotugweng4iuwo5";
+
+    public function login(Request $request)
+    {
+        // Buscar el usuario por email
+        // Comprobar que user de requste y email y password de user son iguales
+        // si son iguales tengo que codificar el token
+        // después devolver la respuesta json con el token y un codigo 200
+        // si no son iguales devolver la respuesta json con codigo 401
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -37,17 +48,13 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->save();
+        $user->register($request);
 
-        $key = "`qo3ieh4gnopiewhnrti9ugnfiopearjsfp982857yuiotugweng4iuwo5";
         $data_token = [
             "email" => $user->email,
         ];
 
-        $token = JWT::encode($data_token, $key);
+        $token = JWT::encode($data_token, $this->key);
 
         return response()->json([
             "token" => $token
