@@ -8,15 +8,23 @@ use App\Helpers\Token;
 
 class UsersController extends Controller
 {
-    private $key = "`qo3ieh4gnopiewh89wnrti9ugnfiopearjsfp982857yuiotugweng4iuwo5";
-
     public function login(Request $request)
     {
-        // Buscar el usuario por email
-        // Comprobar que user de requste y email y password de user son iguales
-        // si son iguales tengo que codificar el token
-        // después devolver la respuesta json con el token y un codigo 200
-        // si no son iguales devolver la respuesta json con codigo 401
+        $user = User::by_field('email', $request->email);
+
+        if ($user->password == $request->password)
+        {
+            $token = new Token(['email' => $user->email]);
+            $token = $token->encode();
+
+            return response()->json([
+                "token" => $token
+            ], 200);
+        }
+
+        return response()->json([
+            "message" => "unauthorized"
+        ], 401);
     }
 
     /**

@@ -24,4 +24,14 @@ class User extends Model
         $user->password = $request->password;
         $user->save();
     }
+
+    public static function by_field($key, $value)
+    {
+        $users = self::where($key, $value)->get();
+
+        foreach ($users as $key => $user)
+        {
+            return $user;
+        }
+    }
 }
