@@ -10,7 +10,7 @@ class Token
     private $data;
     private $algorithm;
 
-    public function __construct($data)
+    public function __construct($data = null)
     {
         $this->key = "`qo3ieh4gnopiewh89wnrti9ugnfiopearjsfp982857yuiotugweng4iuwo5";
         $this->algorithm = array('HS256');

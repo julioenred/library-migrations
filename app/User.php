@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\Token;
 
 class User extends Model
 {
@@ -33,5 +34,19 @@ class User extends Model
         {
             return $user;
         }
+    }
+
+    public function is_authorized(Request $request)
+    {
+        $token = new Token();
+        $header_authorization = $request->header('Authorization');
+
+        if (!isset($header_authorization))
+        {
+            return false;
+        }
+
+        $data = $token->decode($header_authorization);
+        return !empty(self::by_field('email', $data->email));
     }
 }

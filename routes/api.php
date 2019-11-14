@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Middleware\CheckAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('users', 'UsersController');
-Route::apiResource('books', 'BooksController');
+
 Route::post('users/lend', 'UsersController@lend');
 Route::post('login', 'UsersController@login');
+
+Route::group(['middleware' => ['auth']], function ()
+{
+    Route::apiResource('books', 'BooksController');
+});
