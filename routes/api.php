@@ -14,10 +14,6 @@ use App\Http\Middleware\CheckAuth;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::apiResource('users', 'UsersController');
 
 Route::post('users/lend', 'UsersController@lend');

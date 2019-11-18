@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Book;
 use App\Helpers\Token;
 
 class UsersController extends Controller
@@ -25,6 +26,13 @@ class UsersController extends Controller
         return response()->json([
             "message" => "unauthorized"
         ], 401);
+    }
+
+    public function lend(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $book = Book::find($request->book_id);
+        $user->books()->attach($book);
     }
 
     /**

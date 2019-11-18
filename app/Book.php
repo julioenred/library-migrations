@@ -10,9 +10,9 @@ class Book extends Model
 
     protected $fillable = ['title', 'description'];
 
-    // public function users()
-    // {
-    //     return $this->belongsToMany('App\User');
-    // }
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'user_lend_books');
+    }
 
 }
